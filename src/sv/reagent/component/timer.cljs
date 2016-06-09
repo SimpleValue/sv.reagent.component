@@ -13,21 +13,30 @@
   (.getTime (js/Date.)))
 
 (defn timer-process
-  [modifier] 
+  [model]
   (let [timer (Timer. 100)]
     (events/listen
      timer
      goog.Timer.TICK
      (fn [e]
-       (modifier update-in [:tick] #(inc (or % 0)))))
+       (swap! model update-in [:tick] #(inc (or % 0)))))
     {:start (fn []
-              (modifier assoc :start (now))
+              (swap! model assoc
+                     :start (now)
+                     :running true)
               (.start timer))
      :stop (fn []
-             (.stop timer))}))
+             (.stop timer)
+             (swap!
+              model
+              (fn [m]
+                (assoc
+                 m
+                 :running false
+                 :duration (- (now) (:start m))))))}))
 
-(defn timer [modifier]
-  (let [v (modifier)
+(defn timer [model]
+  (let [v @model
         now (now)
         start (:start v now)
         duration (- now start)]
