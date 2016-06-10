@@ -35,7 +35,7 @@
      :page-size page-size
      :count count
      :last-page last-page
-     :start-row start-row
+     :start-row (inc start-row)
      :end-row (let [end-row (+ start-row page-size)]
                 (if (< end-row count)
                   end-row
