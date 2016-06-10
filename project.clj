@@ -1,4 +1,4 @@
-(defproject sv/reagent.component "0.1.1"
+(defproject sv/reagent.component "0.1.2-SNAPSHOT"
   :description "Some UI components for Reagent."
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
